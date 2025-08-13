@@ -51,9 +51,30 @@ CLEAN_OVERRIDES=0
 # ------------- Parse CLI flags -------------
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --fn-id)         FN_ID="${2:-}"; shift 2;;
-    --select-id)     SELECT_ID="${2:-}"; shift 2;;
-    --menu-id)       MENU_ID="${2:-}"; shift 2;;
+      --fn-id)
+        if [[ -z ${2-} || ! $2 =~ ^[0-9]{1,2}$ ]]; then
+          echo "--fn-id requires a numeric argument of up to two digits" >&2
+          exit 1
+        fi
+        FN_ID="$2"
+        shift 2
+        ;;
+      --select-id)
+        if [[ -z ${2-} || ! $2 =~ ^[0-9]{1,2}$ ]]; then
+          echo "--select-id requires a numeric argument of up to two digits" >&2
+          exit 1
+        fi
+        SELECT_ID="$2"
+        shift 2
+        ;;
+      --menu-id)
+        if [[ -z ${2-} || ! $2 =~ ^[0-9]{1,2}$ ]]; then
+          echo "--menu-id requires a numeric argument of up to two digits" >&2
+          exit 1
+        fi
+        MENU_ID="$2"
+        shift 2
+        ;;
     --clean-overrides) CLEAN_OVERRIDES=1; shift;;
     -h|--help)
       cat <<USAGE
